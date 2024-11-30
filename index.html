@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMAZING CALCULATOR</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: cursive;
+        }
+        body {
+            height: 100vh;
+            background: linear-gradient(to bottom, cyan 50%, blue 50%);
+        }
+        .calculator {
+            background: #ff7200;
+            border: 1px solid black;
+            width: 400px;
+            margin: auto; 
+            box-shadow: 0 15px 27px orangered;
+            border-radius: 8px;
+        }
+        #userinput {
+            width: 100%;
+            text-align: right;
+            padding: 15px 10px;
+            background: inherit;
+            color: purple;
+            font-size: 2.3rem;
+            border: none;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .buttons input[type="button"] {
+            font-size: 1.4rem;
+            padding: 17px;
+            border: none;
+            background-color: transparent;
+            color: #fff;
+        }
+        .buttons input[type="button"]:hover {
+            box-shadow: 0 3px 10px black;
+        }
+        #equal {
+            grid-row: span 2;
+            background-color: red;
+        }
+        #zero {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="diplayer">
+            <div class="inputdisplayer">
+                <input type="text" id="userinput" placeholder="0" disabled />
+            </div>
+            <div class="buttons">
+                <input type="button" value="AC" class="inputbutton" id="clear"/>
+                <input type="button" class="inputbutton" value="Del" id="erase"/>
+                <input type="button" class="inputbutton" value="/">
+                <input type="button" class="inputbutton" value="*">
+
+                <input type="button" class="inputbutton" value="7">
+                <input type="button" class="inputbutton" value="8">
+                <input type="button" class="inputbutton" value="9">
+                <input type="button" class="inputbutton" value="-">
+
+                <input type="button" class="inputbutton" value="6">
+                <input type="button" class="inputbutton" value="5">
+                <input type="button" class="inputbutton" value="4">
+                <input type="button" class="inputbutton" value="+">
+
+                <input type="button" class="inputbutton" value="1">
+                <input type="button" class="inputbutton" value="2">
+                <input type="button" class="inputbutton" value="3">
+
+                <input type="button" class="inputbutton" value="=" id="equal">
+                <input type="button" class="inputbutton" value="0" id="zero">
+                <input type="button" class="inputbutton" value=".">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let equalPress = 0;
+
+        let buttons = document.querySelectorAll(".inputbutton");
+        let inputs = document.getElementById("userinput");
+        let clear = document.getElementById("clear");
+        let erase = document.getElementById("erase");
+        let equal = document.getElementById("equal");
+
+        window.onload = () => {
+            inputs.value = "";
+        };
+
+        buttons.forEach((btnclass) => {
+            btnclass.addEventListener("click", () => {
+                if (equalPress == 1) {
+                    inputs.value = "";
+                    equalPress = 0;
+                }
+                if (btnclass.value === "Del") {
+                    inputs.value = inputs.value.slice(0, -1); // Delete last character
+                } else if (btnclass.value === "AC") {
+                    inputs.value = ""; // Clear all
+                } else if (btnclass.value === "=") {
+                    equalPress = 1;
+                    try {
+                        // Evaluate the expression and show result
+                        inputs.value = eval(inputs.value);
+                    } catch (error) {
+                        inputs.value = "Error"; // Handle any errors during evaluation
+                    }
+                } else {
+                    inputs.value += btnclass.value; // Append button value
+                }
+            });
+        });
+    </script>
+</body>
+</html>
